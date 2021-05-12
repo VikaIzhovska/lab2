@@ -1,0 +1,46 @@
+extends ../layout.pug
+
+block prepend styles
+    link(rel='stylesheet' href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
+
+block content
+    h3  Delivery to planet information
+    form(id='add-form' name='add-form' class='form-inline' action='/ShipmentToPlanetDelivery' method='POST')
+        div(class='form-group')
+            div(class='col-md-3')
+                label(for='name') Shipment 
+            div(class='col-md-9') 
+                select(name = 'Shipment')
+                    each val, index in Shipment
+                        option= index + '. Code:' + val.code + ', ' + val.name + ', ' + val.weight
+        div(class='form-group')
+            div(class='col-md-3')
+                label(for='name') Planet
+            div(class='col-md-9')
+                select(name = 'Planet')
+                    each val, index in Planet
+                        option= index + '. Name:' + val.name + ', ' + val.capacity + ', ' + val.mass
+        div(class='form-group')
+            div(class='col-md-12')
+                button(type='submit' class='btn btn-primary') Deliver
+
+        br
+        hr
+        div.list-wrapper
+            table(id='list')
+                if ShipmentFinished.length === 0
+                    p No delivered shipments 
+                else
+                    tr
+                        th='Index' 
+                        th='Shipment'
+                        th='Planet'
+                    each val, index in ShipmentFinished
+                        tr
+                            td=index 
+                            td=+val.Shipment.code
+                            td= val.Planet.name
+        hr
+        br
+block append scripts
+    script(src='//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')

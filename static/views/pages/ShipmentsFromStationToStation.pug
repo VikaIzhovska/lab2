@@ -1,0 +1,46 @@
+extends ../layout.pug
+
+block prepend styles
+    link(rel='stylesheet' href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
+
+block content
+    h3  From spacestation to spacestation transfer information
+    form(id='add-form' name='add-form' class='form-inline' action='/ShipmentFromStationToStationTransfer' method='POST')
+        div(class='form-group')
+            div(class='col-md-3')
+                label(for='name') Shipment
+            div(class='col-md-9')
+                select(name = 'ShipmentFinishedOnSpaceStation')
+                    each val, index in ShipmentFinishedOnSpaceStation 
+                        option= index + '. Code:' + val.Shipment.code + ', ' + val.Shipment.name + ', ' + val.Shipment.weight
+        div(class='form-group')
+            div(class='col-md-4')
+                label(for='') Spacestation
+            div(class='col-md-8')
+                select(name = 'SpaceStation')
+                    each val, index in SpaceStation
+                        option= index + '. Number:' + val.number + ', ' + val.capacity + ', ' + val.need
+        div(class='form-group')
+            div(class='col-md-12')
+                button(type='submit' class='btn btn-primary') Transfer
+        
+        br
+        hr
+        div.list-wrapper
+            table(id='list')
+                if ShipmentFinished.length === 0
+                    p No data
+                else
+                    tr
+                        th='Index'
+                        th='Shipment'
+                        th='Spacestation'
+                    each val, index in ShipmentFinished
+                        tr
+                            td=index 
+                            td=+ val.Shipment.code
+                            td=+ val.SpaceStation.number
+        hr
+        br
+block append scripts
+    script(src='//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')

@@ -1,0 +1,81 @@
+extends ../layout.pug
+
+block prepend styles
+  link(rel='stylesheet' href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
+
+block content
+  h3 Adding planet to the collection
+  form(id='add-form' name='add-form' class='form-inline' action='/createPlanet' method='POST')
+    div(class='form-group')
+      div(class='col-md-12')
+        label(for='name') Name <input id='address' name = 'name' value='' class='form-control'>
+    div(class='form-group')
+      div(class='col-md-12')
+        label(for='name') Capacity <input id='name' name='capacity' value='' class='form-control'>
+    div(class='form-group')
+      div(class='col-md-12')
+        label(for='name') Mass <input id='name' name='mass' value='' class='form-control'>
+    div(class='form-group')
+      div(class='col-md-12')
+        button(type='submit' class='btn btn-success') Create
+
+    br
+    hr
+    div.list-wrapper
+      table(id='list')
+        tr 
+         th='Idex'
+         th='Name'
+         th='Capacity'
+         th='Mass'
+        each val, index in data
+            tr
+                td= +index
+                td= val.name
+                td=+ val.capacity
+                td=+ val.mass
+  br
+  h3  Editing planet in the collection
+  form( name='Edit' class='form-inline' action='/editPlanet' method='POST')
+    div(class='form-group')
+      div(class='col-md-12')
+        label(for='name') New name <input name='name' value='' class='form-control'>        
+    div(class='form-group')
+      div(class='col-md-12')
+        label(for='name') New capacity <input name='capacity' value='' class='form-control'>
+    div(class='form-group')
+      div(class='col-md-12')
+        label(for='name') New mass <input name='mass' value='' class='form-control'>
+    div(class='form-group')
+      select#OueShip(name = 'index')
+        each val, index in data
+          option= index + '. Name:' + val.name + ', ' + val.capacity + ', ' + val.mass
+
+      div(class='form-group')
+        div(class='col-md-12')
+          button(type='submit' class='btn btn-primary') Edit
+  br
+  h3  Deleting planet from the collection
+  form( name='Edit' class='form-inline' action='/deletePlanet' method='POST')
+    div(class='form-group')
+      select(name = 'index')
+        each val, index in data
+          option= index + '. Name:' + val.name + ', ' + val.capacity + ', ' + val.mass
+
+      div(class='form-group')
+        div(class='col-md-12')
+          button(type='submit' class='btn btn-danger') Delete
+  br
+  h3  Search by name of planet
+  if info
+    h4= 'The planet with name ' + info.name + ' exists. Capacity:'+ info.capacity +'; mass:' + info.mass
+  else
+    p Here will be information about planet
+  form( name='Edit' class='form-inline' action='/findPlanet' method='POST')
+    div(class='form-group')
+      div(class='col-md-10')
+        label(for='name') Name <input name='name' value='' class='form-control'>
+      div(class='col-md-2')
+          button(type='submit' class='btn btn-primary') Find
+block append scripts
+  script(src='//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')

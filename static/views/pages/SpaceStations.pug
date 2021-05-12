@@ -1,0 +1,82 @@
+extends ../layout.pug
+
+block prepend styles
+  link(rel='stylesheet' href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
+
+block content 
+  h3 Adding spacestation to the collection
+  form(id='add-form' name='add-form' class='form-inline' action='/createSpaceStation' method='POST')
+    div(class='form-group')
+      div(class='col-md-12')
+        label(for='name') Number <input id='address' name = 'number' value='' class='form-control'>
+    div(class='form-group')
+      div(class='col-md-12')
+        label(for='name') Capacity <input id='name' name='capacity' value='' class='form-control'>
+    div(class='form-group')
+      div(class='col-md-12')
+        label(for='name') Need <input id='name' name='need' value='' class='form-control'>
+    div(class='form-group')
+      div(class='col-md-12')
+        button(type='submit' class='btn btn-success') Create
+
+    br
+    hr
+    div.list-wrapper
+      table(id='list')
+        tr 
+         th='Index'
+         th='Number'
+         th='Capacity'
+         th='Need'
+         each val, index in data
+            tr
+              td= +index
+              td=+ val.number
+              td=+ val.capacity
+              td=+ val.need
+  br
+  h3  Editing spacestation in the collection
+  form( name='Edit' class='form-inline' action='/editSpaceStation' method='POST')
+    div(class='form-group')
+      div(class='col-md-12')
+        label(for='name') New number <input name='number' value='' class='form-control'>
+    div(class='form-group')
+      div(class='col-md-12')
+        label(for='name') New capacity <input name='capacity' value='' class='form-control'>
+    div(class='form-group')
+      div(class='col-md-12')
+        label(for='name') New need <input name='need' value='' class='form-control'>
+    div(class='form-group')
+      select#OueShip(name = 'index')
+        each val, index in data
+          option= index + '. Number:' + val.number + ', ' + val.capacity + ', ' + val.need
+
+      div(class='form-group')
+        div(class='col-md-12')
+          button(type='submit' class='btn btn-primary') Edit
+  br
+  h3  Deleting spacestation from the collection
+  form( name='Edit' class='form-inline' action='/deleteSpaceStation' method='POST')
+    div(class='form-group')
+      select(name = 'index')
+        each val, index in data
+          option= index + '. Number:' + val.number + ', :' + val.capacity + ', ' + val.need
+
+      div(class='form-group')
+        div(class='col-md-12')
+          button(type='submit' class='btn btn-danger') Delete
+  br
+  h3  Search by number of spacestation
+  if info
+    h4= 'The spacestation with number ' + info.number + ' exists. Capacity:' + info.capacity + '; need:' + info.need
+  else
+    p Here will be information about spacestation
+  form( name='Edit' class='form-inline' action='/findSpaceStation' method='POST')
+    div(class='form-group')
+      div(class='col-md-10')
+        label(for='name') Number <input name='number' value='' class='form-control'> 
+      div(class='col-md-2')
+        button(type='submit' class='btn btn-primary') Find
+        
+block append scripts
+  script(src='//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')

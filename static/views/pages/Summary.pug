@@ -1,0 +1,26 @@
+extends ../layout.pug
+
+block prepend styles
+  link(rel='stylesheet' href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
+
+block content
+  h3 Report of stations to which less than 30% of needs are delivered 
+  form(id='add-form' name='add-form' class='form-inline' method='POST')
+    br
+    hr
+    div.list-wrapper
+      table(id='list')
+        tr
+          th='Index'
+          th='Number'
+          th='Capacity'
+          th='Need'
+        each val, index in SpaceStations
+            tr
+                td=+ index
+                td=+ val.number
+                td=+ val.capacity
+                td=+ val.need
+  br
+block append scripts
+  script(src='//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')

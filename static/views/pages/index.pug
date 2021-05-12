@@ -1,0 +1,20 @@
+extends ../layout.pug
+
+block content
+  div(class='breadcrumb')
+    div= title
+  div.list-group
+    div.list-group-item
+      span(class='list-icon glyphicon glyphicon-paste')
+      <span> </span>
+      a(href='/SpaceStations') Spacestations
+  div.list-group
+    div.list-group-item
+      span(class='list-icon glyphicon glyphicon-paste') 
+      <span> </span>
+      a(href='/Planets') Planets
+  div.list-group
+    div.list-group-item
+      span(class='list-icon glyphicon glyphicon-paste')
+      <span> </span>
+      a(href='/Shipments') Shipments

@@ -1,0 +1,81 @@
+extends ../layout.pug
+
+block prepend styles
+  link(rel='stylesheet' href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
+
+block content
+  h3  Adding shipment to the collection
+  form(id='add-form' name='add-form' class='form-inline' action='/createShipment' method='POST')
+    div(class='form-group')
+      div(class='col-md-12')
+        label(for='name') Code  <input id='address' name = 'code' value='' class='form-control'>
+    div(class='form-group')
+      div(class='col-md-12')
+        label(for='name') Name  <input id='name' name='name' value='' class='form-control'>
+    div(class='form-group')
+      div(class='col-md-12')
+        label(for='name') Weight  <input id='name' name='weight' value='' class='form-control'>       
+    div(class='form-group')
+      div(class='col-md-12')
+        button(type='submit' class='btn btn-success') Create
+
+    br
+    hr
+    div.list-wrapper
+      table(id='list')
+       tr
+        th='Index'
+        th='Code'
+        th='Name'
+        th='Weight'
+        each val, index in data            
+            tr
+                td=+index
+                td=+val.code
+                td= val.name
+                td=+val.weight
+  br
+  h3  Editing shipment in the collection 
+  form( name='Edit' class='form-inline' action='/editShipment' method='POST')
+    div(class='form-group')
+      div(class='col-md-12')
+        label(for='name') New code <input name='code' value='' class='form-control'>
+    div(class='form-group')
+      div(class='col-md-12')
+        label(for='name') New name <input name='name' value='' class='form-control'>
+    div(class='form-group')
+      div(class='col-md-12')
+        label(for='name') New weight <input name='weight' value='' class='form-control'>
+    div(class='form-group')
+      select#OueShip(name = 'index')
+        each val, index in data
+          option= index +'. Code:' + val.code + ', ' + val.name + ', ' + val.weight
+
+      div(class='form-group')
+        div(class='col-md-12')
+          button(type='submit' class='btn btn-primary') Edit
+  br
+  h3  Deleting shipment from the collection
+  form( name='Edit' class='form-inline' action='/deleteShipment' method='POST')
+    div(class='form-group')
+      select(name = 'index')
+        each val, index in data
+          option= index + '. Code:' + val.code + ', ' + val.name + ', ' + val.weight
+
+      div(class='form-group')
+        div(class='col-md-12')
+          button(type='submit' class='btn btn-danger') Delete
+  br
+  h3  Search by code of shipment
+  if info
+    h4= 'The shipment with code ' +info.code+' is ' + info.name + ', weight: ' + info.weight
+  else
+    p Here will be information about shipment
+  form( name='Edit' class='form-inline' action='/findShipment' method='POST')
+    div(class='form-group')
+      div(class='col-md-10')
+        label(for='name') Code <input name='code' value='' class='form-control'>
+      div(class='col-md-2')
+          button(type='submit' class='btn btn-primary') Find
+block append scripts
+  script(src='//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
